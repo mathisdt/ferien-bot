@@ -54,8 +54,12 @@ def get_message(days_to_adjust: int = 0, bar_width: int = 0):
     logging.debug(f"datum={today}")
 
     school_response = requests.get(f'https://ferien-api.de/api/v1/holidays/{config.land_kuerzel}')
+    if not school_response:
+        raise Exception("no data received from ferien-api.de")
     school_data = school_response.json()
     legal_response = requests.get(f'https://feiertage-api.de/api/?jahr={today.year}&nur_land={config.land_kuerzel}')
+    if not legal_response:
+        raise Exception("no data received from feiertage-api.de")
     legal_data = legal_response.json()
     legal_holidays = [datetime.strptime(legal_data[legal_holiday]['datum'], '%Y-%m-%d').date()
                       for legal_holiday in legal_data]
