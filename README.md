@@ -57,3 +57,11 @@ Benötigte Einstellungen für den Bot:
   [hier](https://de.wikipedia.org/wiki/ISO_3166-2:DE) (hinterer Teil des Codes)
 - `land_name`: Name des Bundeslandes
 - `bar_width`: Breite der Fortschrittsanzeige in Zeichen
+
+## Anpassungen / lokales Testen
+
+Wenn man lokal ausprobieren möchte, wie sich Code-Änderungen auf die ausgegebene Meldung
+auswirken, kann `bot_console.py` verwendet werden. Als Parameter kann eine positive oder
+negative Anzahl von Tagen mitgegeben werden, die dann bei der Berechnung für das aktuelle
+Datum berücksichtigt werden. So kann getestet werden, welche Meldungen in der
+Vergangenheit oder Zukunft ausgegeben werden würden.
