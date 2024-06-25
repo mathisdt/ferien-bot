@@ -7,7 +7,7 @@ class Config:
     _config: configparser.ConfigParser
     _section: str
 
-    def __init__(self, section = "DEFAULT"):
+    def __init__(self, section="DEFAULT"):
         self._section = section
         configfile = f"{os.path.realpath(os.path.dirname(__file__))}/config.ini"
         if not os.path.isfile(configfile):

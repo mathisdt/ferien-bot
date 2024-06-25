@@ -65,3 +65,25 @@ auswirken, kann `bot_console.py` verwendet werden. Als Parameter kann eine posit
 negative Anzahl von Tagen mitgegeben werden, die dann bei der Berechnung für das aktuelle
 Datum berücksichtigt werden. So kann getestet werden, welche Meldungen in der
 Vergangenheit oder Zukunft ausgegeben werden würden.
+
+Auch gibt es `tests.py`, worin die Meldungen für bestimmte Randsituationen ausgegeben
+werden.
+
+### Ferien-API lokal laufen lassen
+
+Beim Testen kommt es zu häufigen Abrufen der APIs. Insbesondere ferien-api.de hat ein
+aggressives Throttling bzw. Blocking bei zu vielen Abfragen pro Stunde, so dass es
+ggf. Sinn ergibt, diese API lokal zu nutzen. Beispielsweise so geht das:
+```
+git clone https://github.com/paulbrejla/ferien-api.git
+git clone https://github.com/paulbrejla/ferien-api-data.git
+
+# alle Dateien von ferien-api-data/resources/de nach ferien-api/src/main/resources/holidays kopieren:
+cp ferien-api-data/resources/de/* ferien-api/src/main/resources/holidays/
+
+cd ferien-api
+JAVA_HOME=/path/to/your/jdk8 LOADER_SOURCE=filesystem SERVER_PORT=8080 ./gradlew bootRun
+```
+Wenn die Ferien-API lokal genutzt werden soll, muss in `config.ini` der entsprechende
+Eintrag im Bereich `[ferien]` vorhanden sein:
+`ferien_api_server = http://localhost:8080`

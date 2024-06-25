@@ -14,7 +14,7 @@ config = Config("console")
 
 days_to_adjust = 0
 if len(sys.argv) >= 2:
-    days_to_adjust = sys.argv[1]
+    days_to_adjust = int(sys.argv[1])
 
 bar_width = int(config.bar_width) if config.bar_width else 0
 NL = "\n"
