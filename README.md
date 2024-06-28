@@ -82,8 +82,48 @@ git clone https://github.com/paulbrejla/ferien-api-data.git
 cp ferien-api-data/resources/de/* ferien-api/src/main/resources/holidays/
 
 cd ferien-api
-JAVA_HOME=/path/to/your/jdk8 LOADER_SOURCE=filesystem SERVER_PORT=8080 ./gradlew bootRun
+JAVA_HOME=/path/to/your/jdk8 LOADER_SOURCE=filesystem SERVER_PORT=8123 ./gradlew bootRun
 ```
 Wenn die Ferien-API lokal genutzt werden soll, muss in `config.ini` der entsprechende
 Eintrag im Bereich `[ferien]` vorhanden sein:
-`ferien_api_server = http://localhost:8080`
+`ferien_api_server = http://localhost:8123`
+
+#### /etc/systemd/system/ferien-api.service (Beispiel)
+
+```
+[Unit]
+Description=Ferien-API
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Environment="JAVA_HOME=/opt/jdk8"
+Environment="LOADER_SOURCE=filesystem"
+Environment="SERVER_PORT=8123"
+WorkingDirectory=/opt/ferien-api
+ExecStart=/opt/ferien-api/gradlew bootRun
+User=ferienapi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### Update-Skript für die Ferien-API inkl. Daten (Beispiel)
+
+```
+#!/bin/sh
+
+systemctl stop ferien-api.service
+
+cd /opt/ferien-api
+sudo -u ferienapi git pull 2>&1 | grep -v "Bereits aktuell"
+cd /opt/ferien-api-data
+sudo -u ferienapi git pull 2>&1 | grep -v "Bereits aktuell"
+
+cd /opt
+rm -rf ferien-api/src/main/resources/holidays/*
+sudo -u ferienapi cp ferien-api-data/resources/de/* ferien-api/src/main/resources/holidays/
+
+systemctl start ferien-api.service
+```
