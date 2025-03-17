@@ -1,4 +1,4 @@
 requests==2.32.3
 Mastodon.py==2.0.1
 pydbus==0.6.0
-PyGObject==3.52.2
+PyGObject==3.52.3
