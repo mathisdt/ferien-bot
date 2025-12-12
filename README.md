@@ -127,3 +127,9 @@ sudo -u ferienapi cp ferien-api-data/resources/de/* ferien-api/src/main/resource
 
 systemctl start ferien-api.service
 ```
+
+## Lizenz
+
+Die Lizenz des Projekts ist GPL v3. Durch einreichen bzw. beitragen von Änderungen
+werden diese automatisch auch unter der GPL v3 lizensiert. Wenn das nicht gewünscht
+ist, bitte den Beitrag (z.B. Pull Request) nicht einreichen!
