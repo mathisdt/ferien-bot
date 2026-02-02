@@ -71,6 +71,8 @@ def get_message(days_to_adjust: int = 0, bar_width: int = 0):
         holidays_start_date = datetime.strptime(holidays_start, '%Y-%m-%d').date()
         holidays_end = item['end']
         holidays_end_date = datetime.strptime(holidays_end, '%Y-%m-%d').date()
+        if config.end_date_exclusive == "true" and holidays_end_date - timedelta(days=1) >= holidays_start_date:
+            holidays_end_date = holidays_end_date - timedelta(days=1)
         while holidays_start_date.weekday() in (0, 6) or (holidays_start_date - timedelta(days=1)) in legal_holidays:
             holidays_start_date = holidays_start_date - timedelta(days=1)
         while holidays_end_date.weekday() in (4, 5) or holidays_end_date + timedelta(days=1) in legal_holidays:
